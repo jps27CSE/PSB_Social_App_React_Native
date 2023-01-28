@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 // import { StatusBar } from "expo-status-bar";
 // import { StyleSheet, Text, View } from "react-native";
 
-import { NavigationContainer } from "@react-navigation/native";
+// import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import OnboardingScreen from "../screens/OnboardingScreen";
 import LoginScreen from "../screens/LoginScreen";
+import SignupScreen from "../screens/SignupScreen";
 
-const AppStack = createStackNavigator();
+const Stack = createStackNavigator();
 
 const AuthStack = () => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+  let routeName;
 
   useEffect(() => {
     AsyncStorage.getItem("alreadyLaunched").then((value) => {
@@ -26,19 +28,28 @@ const AuthStack = () => {
   }, []);
 
   if (isFirstLaunch === null) {
-    return null;
-  } else if (isFirstLaunch === true) {
-    return (
-      <NavigationContainer>
-        <AppStack.Navigator headerMode="none">
-          <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
-          <AppStack.Screen name="Login" component={LoginScreen} />
-        </AppStack.Navigator>
-      </NavigationContainer>
-    );
+    return null; // This is the 'tricky' part: The query to AsyncStorage is not finished, but we have to present something to the user. Null will just render nothing, so you can also put a placeholder of some sort, but effectively the interval between the first mount and AsyncStorage retrieving your data won't be noticeable to the user. But if you want to display anything then you can use a LOADER here
+  } else if (isFirstLaunch == true) {
+    routeName = "Onboarding";
   } else {
-    return <LoginScreen />;
+    routeName = "Login";
   }
+
+  return (
+    <Stack.Navigator initialRouteName={routeName}>
+      <Stack.Screen
+        name="Onboarding"
+        component={OnboardingScreen}
+        options={{ headers: () => null }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headers: () => null }}
+      />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+    </Stack.Navigator>
+  );
 };
 
 export default AuthStack;

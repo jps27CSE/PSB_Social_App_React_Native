@@ -13,17 +13,12 @@ import FormInput from "../components/FormInput";
 import FormButton from "../components/FormButton";
 import SocialButton from "../components/SocialButton";
 
-const LoginScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  // const navigation = useNavigation();
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={require("../assets/rn-social-logo.png")}
-        style={styles.logo}
-      />
-      <Text style={styles.text}>PSB Social</Text>
+      <Text style={styles.text}>Create an Account</Text>
 
       <FormInput
         labelValue={email}
@@ -44,7 +39,7 @@ const LoginScreen = ({ navigation }) => {
       />
 
       <FormButton
-        buttonTitle="Sign In"
+        buttonTitle="Sign Up"
         onPress={() => alert(email, "Button Clicked")}
       />
 
@@ -80,7 +75,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -89,11 +84,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
   },
-  logo: {
-    height: 150,
-    width: 150,
-    resizeMode: "cover",
-  },
+
   text: {
     fontFamily: "Kufam-SemiBoldItalic",
     fontSize: 28,
@@ -103,9 +94,7 @@ const styles = StyleSheet.create({
   navButton: {
     marginTop: 15,
   },
-  forgotButton: {
-    marginVertical: 35,
-  },
+
   navButtonText: {
     fontSize: 18,
     fontWeight: "500",
