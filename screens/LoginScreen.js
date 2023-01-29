@@ -16,6 +16,7 @@ import SocialButton from "../components/SocialButton";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   // const navigation = useNavigation();
   return (
     <ScrollView contentContainerStyle={styles.container}>
